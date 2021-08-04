@@ -19,22 +19,21 @@ print("h1")
 
 searchbar.clear()
 searchbar.send_keys('titanium')
-
+print(searchbar)
 print("h2")
 
-x=driver.find_elements(with_tag_name('button').below(searchbar))
-s=x[0].get_attribute('class_name')
-print(s)
-driver.find_element(By.CLASS_NAME,s).click()
+x=driver.find_elements(with_tag_name('a').below(searchbar))
+for i in x:
+    print(i)
+print(len(x))
+driver.find_element(By.TAG_NAME, 'button').click()
 
 print("h3")
 
 searchbar = driver.find_element(By.NAME,'q')
 x=driver.find_elements(with_tag_name('a').below(searchbar))
-
-i=x[0]
-s=i.get_attribute('class_name')
-print(s,end=' ')
-driver.find_element(By.CLASS_NAME,s).click()
-
+for i in x:
+    print(i)
+print(len(x))
+x[0].click()
 print("h3 over")
