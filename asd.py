@@ -20,48 +20,58 @@ map={}
 options = Options()
 options.page_load_strategy = 'eager'
 driver = Chrome(options=options)
-driver.get("https://www.cosdna.com/eng/stuff.php")
+
 #driver.implicitly_wait(6)
-print("h0")
+for items in stuff:
+    driver.get("https://www.cosdna.com/eng/stuff.php")
+    print("h0")
 
-searchbar = driver.find_element(By.NAME,'q')
+    searchbar = driver.find_element(By.NAME,'q')
 
-print("h1")
+    print("h1")
 
-searchbar.clear()
-searchbar.send_keys('asdasdasdasd')
-print(searchbar)
-print("h2")
+    searchbar.clear()
+    searchbar.send_keys(items)
+    print(searchbar)
+    print("h2")
 
-x=driver.find_elements(with_tag_name('a').below(searchbar))
-for i in x:
-    print(i)
-print(len(x))
-driver.find_element(By.TAG_NAME, 'button').click()
+    x=driver.find_elements(with_tag_name('a').below(searchbar))
+    for i in x:
+        print(i)
+    print(len(x))
+    driver.find_element(By.TAG_NAME, 'button').click()
 
-print("h3")
+    print("h3")
 
-searchbar = driver.find_element(By.NAME, 'q')
-x=driver.find_elements(with_tag_name('a').below(searchbar))
-for i in x:
-    print(i.text)
+    searchbar = driver.find_element(By.NAME, 'q')
+    x=driver.find_elements(with_tag_name('a').below(searchbar))
+    for i in x:
+        print(i.text)
 
 
-print(len(x))
+    print(len(x))
 
-driver.execute_script("arguments[0].scrollIntoView(true);", x[0])
-driver.execute_script("arguments[0].click();", x[0])
-searchbar = driver.find_element(By.NAME, 'q')
-x=driver.find_elements(with_tag_name('a').below(searchbar))
+    driver.execute_script("arguments[0].scrollIntoView(true);", x[0])
+    driver.execute_script("arguments[0].click();", x[0])
 
-print("hp")
-print(x[0].text)
-max=-1
-for i in x[0].text:
-    if(i.isdigit()):
-        max=int(i)
-map['asdasdasdasd']=max
+    try:
+        searchbar = driver.find_element(By.NAME, 'q')
+    except Exception as e:
+        print(items,' not found.')
+        continue
+
+    x=driver.find_elements(with_tag_name('a').below(searchbar))
+
+    print("hp")
+    print(x[0].text)
+    max=-1
+    for i in x[0].text:
+        if(i.isdigit()):
+            max=int(i)
+    map[items]=max
+    print(map)
+    print("he")
+    print("h3 over")
+
+driver.quit()
 print(map)
-print("he")
-print("h3 over")
-#driver.quit()
